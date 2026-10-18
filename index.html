@@ -573,6 +573,11 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .info-row span:last-child{color:var(--mut);display:flex;align-items:center;gap:6px}
 .info-row svg{width:13px;height:13px;stroke:var(--mut);fill:none;stroke-width:2}
 .mini-freq{display:flex;align-items:center;gap:12px;direction:ltr}
+.info-edit{width:100%;text-align:start;color:inherit}
+.info-edit .ed-arr{font-style:normal;color:var(--mut);margin-inline-start:8px;display:inline-block;transform:scaleX(var(--d))}
+.mini-sex{display:flex;gap:6px}
+.mini-sex button{padding:7px 12px;border-radius:9px;border:1px solid var(--line);font-size:12px}
+.mini-sex button.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
 .mini-freq button{width:36px;height:36px;border-radius:9px;background:var(--surf);font-family:var(--display);font-weight:800;font-size:20px}
 .mini-freq .n{font-size:28px;min-width:20px;text-align:center}
 .links a{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--fg);text-decoration:none}
@@ -971,6 +976,7 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
                 <div><span data-i="mcGoal"></span><b id="mcGoalV"></b></div>
                 <div><span data-i="mcStatus"></span><b class="ok" id="mcStat"></b></div>
                 <div><span data-i="mcFormula"></span><b id="mcFormV"></b></div>
+                <div><span data-i="mcNo"></span><b id="mcNoV" dir="ltr"></b></div>
               </div>
             </div>
             <button class="link" data-desk data-i="deskLink" style="align-self:flex-start"></button>
@@ -1000,6 +1006,13 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
         <div class="df-sheet"><div class="df-list" id="dfAll"></div></div>
         <p class="sh-note" data-i="dfRule"></p>
         <button class="df-leave" data-df="leave" id="dfLeave" data-i="dfLeaveT"></button>
+      </div>
+      <div class="sheet" id="sheetH" role="dialog" aria-modal="true" aria-labelledby="hTitle">
+        <div class="grab"></div>
+        <div class="sh-top"><div><div class="h" id="hTitle" data-i="hSheet"></div></div><button class="close" data-close aria-label="Fermer">×</button></div>
+        <div class="bigval"><span class="n" id="hVal"></span><small data-i="cm"></small></div>
+        <div class="ruler-wrap"><div class="ruler" id="rHt"><div class="rl"><div class="ticks gen" id="tHt"></div></div></div><span class="needle"></span></div>
+        <button class="cta" id="saveH" data-i="save"></button>
       </div>
       <div class="sheet" id="sheetR" role="dialog" aria-modal="true" aria-labelledby="rTitle">
         <div class="grab"></div>
@@ -1059,6 +1072,8 @@ function isNetErr(r) { return !r || r.status === 'network' || r.status === 'serv
 // « 2x » … « 6x », « 4x+ » → nombre de séances par semaine (3 par défaut)
 function freqNum(f) { const n = parseInt(String(f == null ? '' : f).replace(/\D/g, ''), 10); return n >= 2 && n <= 6 ? n : 3; }
 function freqTxt(n) { return n + 'x'; }
+// Numéro de membre permanent : 12 → « FL-0012 »
+function memberId(n) { return n ? 'FL-' + String(n).padStart(4, '0') : '—'; }
 
 // Courbe de poids : jusqu'aux 6 derniers mois, le dernier = mois en cours ; un mois sans pesée reprend la valeur précédente
 function poidsSerie(poids, fallback, now) {
@@ -1088,7 +1103,7 @@ function fromPayload(p, exNames, now) {
     W: s.W, Wm: s.months,
     REC: exNames.map(n => { const c = ch.get(n); return c ? { kg: +c.kg, prev: c.prev_kg == null ? null : +c.prev_kg } : null; }),
     days: ((p && p.jours) || []).map(d => String(d).slice(0, 10)),
-    done: +(p && p.nb_seances) || 0, defi: !!(p && p.defi), defiMois: +(p && p.defi_mois) || 0,
+    done: +(p && p.nb_seances) || 0, memberNo: +(p && p.member_no) || null, defi: !!(p && p.defi), defiMois: +(p && p.defi_mois) || 0,
     notifs: [u.notif_cours !== false, u.notif_abo !== false, u.notif_anniv !== false]
   };
 }
@@ -1109,7 +1124,7 @@ function fromContenu(c) {
   return { coaches, plan, prices, annonces, hrs, defi: { on: df.on !== false, rew: { fr: df.rew_fr || '', ar: df.rew_ar || '' } }, car };
 }
 
-if (typeof module !== 'undefined') module.exports = { flRpc, isNetErr, freqNum, freqTxt, poidsSerie, fromPayload, fromContenu };
+if (typeof module !== 'undefined') module.exports = { flRpc, isNetErr, freqNum, freqTxt, memberId, poidsSerie, fromPayload, fromContenu };
 
 /* ═══ Données réelles de l'app (index.html + sw.js) ═══ */
 // Planning Salle 2, indexé comme getDay() : 0 = dimanche … 6 = samedi. sp = séance spéciale (enfants / APA)
@@ -1178,7 +1193,7 @@ goalAdj:{perte:"Objectif perte de poids : −500 kcal",masse:"Objectif prise de 
 prot:"Protéines",gluc:"Glucides",lip:"Lipides",calNote:"Estimation (formule de Harris-Benedict), à ajuster avec ton coach.",
 
 infoLbl:"Mes informations",infoGoal:"Objectif",infoLevel:"Niveau",infoFreq:"Séances par semaine",infoHeight:"Taille",infoAge:"Âge",infoSex:"Sexe",years:"{n} ans",
-lockedNote:"Taille, âge et sexe : modifiables à l'accueil.",profileSaved:"Profil mis à jour",
+lockedNote:"La date de naissance ne se modifie pas : elle sert à retrouver ton compte.",hSheet:"Ta taille",mcNo:"N° membre",profileSaved:"Profil mis à jour",
 aboutLbl:"À propos",site:"Site officiel",partnerQ:"Vous êtes un partenaire ? Nous contacter",
 recovLbl:"Récupération",recov:[["Sommeil","7 à 9h par nuit. Le muscle se construit pendant le repos."],["Étirements","5 à 10 min après chaque séance. Réduit les courbatures."],["Hydratation","Boire avant, pendant et après. Minimum 2L par jour."],["Jours de repos","1 à 2 jours obligatoires. Le corps a besoin de récupérer."]],
 deskBtn:"Accueil · enregistrer",deskLink:"Accueil · modifier l'abonnement",deskSaved:"Abonnement enregistré par l'accueil",
@@ -1275,7 +1290,7 @@ goalAdj:{perte:"هدف خسارة الوزن: −500 سعرة",masse:"هدف ب�
 prot:"بروتين",gluc:"كربوهيدرات",lip:"دهون",calNote:"تقدير (معادلة هاريس-بنديكت)، عدّله مع مدربك.",
 
 infoLbl:"معلوماتي",infoGoal:"الهدف",infoLevel:"المستوى",infoFreq:"الحصص في الأسبوع",infoHeight:"الطول",infoAge:"العمر",infoSex:"الجنس",years:"{n} سنة",
-lockedNote:"الطول والعمر والجنس: يمكن تعديلها في الاستقبال.",profileSaved:"تم تحديث الحساب",
+lockedNote:"تاريخ الميلاد لا يُعدّل: يُستعمل لاسترجاع حسابك.",hSheet:"طولك",mcNo:"رقم العضو",profileSaved:"تم تحديث الحساب",
 aboutLbl:"حول القاعة",site:"الموقع الرسمي",partnerQ:"هل أنت شريك؟ تواصل معنا",
 recovLbl:"التعافي",recov:[["النوم","النوم 7-9 ساعات — العضلة تنمو أثناء الراحة"],["التمدد","5-10 دقائق تمدد بعد كل جلسة"],["الترطيب","اشرب قبل وأثناء وبعد التدريب — 2L يومياً على الأقل"],["أيام الراحة","يوم أو يومان راحة إلزاميان — الجسم يحتاج للتعافي"]],
 deskBtn:"الاستقبال · تسجيل",deskLink:"الاستقبال · تعديل الاشتراك",deskSaved:"سجّل الاستقبال الاشتراك",
@@ -1431,6 +1446,7 @@ function renderHome(){
   document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
   document.getElementById('hello').textContent=fmt(t('helloX'),{n:FIRST});
   document.getElementById('mcNameV').textContent=FIRST||'—';
+  document.getElementById('mcNoV').textContent=memberId(ACCOUNTS[CUR]&&ACCOUNTS[CUR].memberNo);
   document.getElementById('mcGoalV').textContent=OBJECTIF?t('goals')[OBJECTIF]:'—';
   document.getElementById('mcFormV').textContent=ABO?t('aboShort')[ABO.type]:t('pendingShort');
   const a=aboInfo(),g=document.getElementById('giant');
@@ -1657,6 +1673,7 @@ function makeRuler(id,tid,min,max,step,onv){
 }
 const rT=makeRuler('rTaille','tTaille',130,220,1,v=>{draft.taille=v;$('vTaille').textContent=v;});
 const rP=makeRuler('rPoids','tPoids',35,180,0.5,v=>{draft.poids=v;$('vPoids').textContent=fr(v);});
+let hv=175;const rH=makeRuler('rHt','tHt',130,220,1,v=>{hv=v;$('hVal').textContent=v;});
 
 function renderOnb(){
   const st=STEP[curOs],inReg=flow==='reg'&&!!st;
@@ -1713,9 +1730,11 @@ function kpBusy(on){$('kp').classList.toggle('off',on);}
 function lockMsg(r){return fmt(t('lockedMin'),{m:r.minutes||15});}
 async function flRegister(code){
   kpBusy(true);
-  const r=await flRpc('fl_register',{p_phone:draft.phone,p_pin:code,p_profile:{name:draft.name,dob:draft.dob,sexe:draft.sexe}});
+  let r=await flRpc('fl_register',{p_phone:draft.phone,p_pin:code,p_profile:{name:draft.name,dob:draft.dob,sexe:draft.sexe}});
   kpBusy(false);
-  if(r&&r.status==='ok'){flStore.set('fl_token',r.token);flStore.set(CACHE_ME,r);draft.pin=code;pinBuf='';oGo('o-q1');return;}
+  const mine=(flStore.get(CACHE_ME)||{}).user;
+  if(r&&r.status==='exists'&&flToken()&&mine&&mine.phone===draft.phone){r={status:'ok',token:flToken()};}   // c'est le compte que ce téléphone vient de créer
+  if(r&&r.status==='ok'){if(r.user)flStore.set(CACHE_ME,r);flStore.set('fl_token',r.token);draft.pin=code;pinBuf='';oGo('o-q1');osStack=[];$('oBack').classList.add('hide');return;}
   if(r&&(r.status==='exists'||r.status==='bad_phone')){
     pinMode='';pinBuf='';osStack=['o-welcome'];oGo('o-reg1',false);
     $('ePhone').innerHTML=r.status==='exists'?t('errExists')+'<button data-o="toLogin">'+t('loginInstead')+'</button>':t('errPhone');return;
@@ -1994,7 +2013,7 @@ function stStatus(a){
 function renderStaffMember(){
   if(!stPhone)return;
   const a=ACCOUNTS[stPhone],s=stStatus(a);
-  let sub='<span dir="ltr">'+fmtPhone(stPhone)+'</span>';
+  let sub='<span dir="ltr">'+memberId(a.memberNo)+' · '+fmtPhone(stPhone)+'</span>';
   if(a.abo)sub+=' · '+t('aboShort')[a.abo.type]+' · '+fmt(t('stEnds'),{d:fmtDate(aboCalc(a.abo).end)});
   $('stCard').innerHTML='<b>'+esc(a.name)+'</b><span>'+sub+'</span><i class="'+s.cls+'">'+s.txt+'</i>';
   aboForm('staff');
@@ -2036,7 +2055,7 @@ function lvMax(a){return (a.freq||3)>=progLen()&&progLen()<5;}
 function progLen(){const cp=curProg();return cp?cp.p.jours.length:6;}
 function fitFreq(a){const n=progLen();if((a.freq||3)>n){a.freq=n;a.act=null;return true;}return false;}
 // Nouveau programme : la rotation repart de la séance A
-function newProg(a){a.progStart=a.done||0;flStore.set('fl_ps_'+CUR,a.progStart);selSess=null;return fitFreq(a);}
+function newProg(a){a.progStart=a.done||0;flStore.set('fl_ps_'+CUR,a.progStart);selSess=null;const f0=a.freq;a.freq=progLen();a.act=null;return a.freq!==f0;}   // nouveau programme : son nombre de séances (le membre peut baisser ensuite)
 function renderSeance(){
   document.querySelectorAll('#seanceSeg button').forEach(b=>b.classList.toggle('on',b.dataset.sg===seg));
   $('planPane').hidden=seg!=='plan';$('progPane').hidden=seg!=='prog';
@@ -2313,9 +2332,9 @@ function renderInfo(){
     '<span class="fl" style="margin-top:4px">'+t('infoGoal')+'</span><div class="chips">'+t('goalOpts').map(([k,l])=>'<button class="'+(a.objectif===k?'on':'')+'" data-pgoal="'+k+'">'+l+'</button>').join('')+'</div>'+
     '<span class="fl" style="margin-top:4px">'+t('infoLevel')+'</span><div class="chips">'+t('lv').map(([k,l])=>'<button class="'+(a.niveau===k?'on':'')+'" data-plv="'+k+'">'+l+'</button>').join('')+'</div>'+
     '<div class="info-row"><span>'+t('infoFreq')+'</span><span class="mini-freq"><button data-pf="-1" aria-label="Moins"'+((a.freq||3)<=2?' disabled':'')+'>−</button><span class="n">'+(a.freq||3)+'</span><button data-pf="1" aria-label="Plus"'+((a.freq||3)>=progLen()?' disabled':'')+'>+</button></span></div>'+(lvMax(a)?'<p class="small-note">'+fmt(t('freqMax'),{n:sessWord(progLen())})+'</p>':'')+
-    '<div class="info-row"><span>'+t('infoHeight')+'</span><span>'+LOCK_SVG+(a.taille||'—')+' '+t('cm')+'</span></div>'+
+    '<button class="info-row info-edit" data-hedit="1"><span>'+t('infoHeight')+'</span><span><span dir="ltr">'+(a.taille||'—')+' '+t('cm')+'</span><i class="ed-arr">›</i></span></button>'+
     '<div class="info-row"><span>'+t('infoAge')+'</span><span>'+LOCK_SVG+(age!=null?fmt(t('years'),{n:age}):'—')+'</span></div>'+
-    '<div class="info-row"><span>'+t('infoSex')+'</span><span>'+LOCK_SVG+(a.sexe==='femme'?t('female'):a.sexe==='homme'?t('male'):'—')+'</span></div>'+
+    '<div class="info-row"><span>'+t('infoSex')+'</span><span class="mini-sex">'+[['homme','male'],['femme','female']].map(([k,l])=>'<button class="'+(a.sexe===k?'on':'')+'" data-psex="'+k+'" aria-pressed="'+(a.sexe===k)+'">'+t(l)+'</button>').join('')+'</span></div>'+
     '<p class="small-note">'+t('lockedNote')+'</p>';
   $('aboutBox').innerHTML='<span class="k" style="margin-top:10px">'+t('aboutLbl')+'</span><div class="links">'+
     '<a href="https://www.fitland.com.tn/" target="_blank" rel="noopener"><span>'+t('site')+'</span><span>www.fitland.com.tn</span></a>'+
@@ -2327,6 +2346,8 @@ function recovHTML(){return '<span class="k" style="margin-top:4px">'+t('recovLb
 function renderAllExtras(){renderExtras();renderCalc();renderInfo();}
 app.addEventListener('click',e=>{
   const a=ACCOUNTS[CUR];if(!a)return;let b;
+  if(b=e.target.closest('[data-hedit]')){hv=a.taille||175;$('hVal').textContent=hv;openSheet('sheetH');requestAnimationFrame(()=>rH.set(hv));return;}
+  if(b=e.target.closest('[data-psex]')){if(a.sexe===b.dataset.psex)return;a.sexe=b.dataset.psex;flSaveProfile({sexe:a.sexe});renderInfo();renderCalc();toast(t('profileSaved'));return;}
   if(b=e.target.closest('[data-act3]')){a.act=b.dataset.act3;renderCalc();return;}
   if(b=e.target.closest('[data-pgoal]')){if(a.objectif===b.dataset.pgoal)return;a.objectif=b.dataset.pgoal;OBJECTIF=a.objectif;const fit=newProg(a);flSaveProfile({objectif:a.objectif,frequence:freqTxt(a.freq)});renderInfo();renderHome();renderSeance();renderProg(false);renderCalc();toast(fit?fmt(t('freqFit'),{n:sessWord(a.freq)}):t('profileSaved'));return;}
   if(b=e.target.closest('[data-plv]')){if(a.niveau===b.dataset.plv)return;a.niveau=b.dataset.plv;const fit=newProg(a);flSaveProfile({niveau:a.niveau,frequence:freqTxt(a.freq)});renderInfo();renderSeance();renderCalc();toast(fit?fmt(t('freqFit'),{n:sessWord(a.freq)}):t('profileSaved'));return;}
@@ -2471,6 +2492,7 @@ document.getElementById('addR').onclick=()=>{rv=startFor(rEx);renderExs();render
 document.getElementById('scrim').onclick=closeSheets;
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheets);
 document.getElementById('saveW').onclick=()=>{W[W.length-1]=Math.round(wv*10)/10;{const n=now();flSend('fl_save_poids',{p_mois:n.getMonth(),p_annee:n.getFullYear(),p_poids:W[W.length-1]});}closeSheets();renderProg(true);renderCalc();toast(fmt(t('savedW'),{m:t('months')[monthAgo(0)]}));};
+document.getElementById('saveH').onclick=()=>{const a=ACCOUNTS[CUR];if(!a)return;a.taille=hv;TAILLE=hv/100;flSaveProfile({taille:String(hv)});closeSheets();renderInfo();renderCalc();renderProg(false);toast(t('profileSaved'));};
 document.getElementById('saveR').onclick=()=>{const o=REC[rEx];REC[rEx]={kg:rv,prev:o?o.kg:null};flSend('fl_save_charge',{p_exercice:T.fr.ex[rEx],p_kg:rv,p_prev_kg:o?o.kg:null});closeSheets();renderProg(false);toast(t('savedR'));};
 app.addEventListener('click',e=>{
   let b;
