@@ -136,6 +136,10 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .cpres button small{display:block;color:var(--mut);font-size:11.5px}
 .cpres .free{border-style:dashed}
 .coach-lnk{margin-top:4px;align-self:center;font-size:12.5px;opacity:.8}
+.mycard{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 16px;border-radius:16px;background:var(--brand);color:#1C1B19;margin:8px 0}
+.mycard .k{color:#1C1B19;opacity:.7}.mycard-no{font-size:46px;letter-spacing:1px;line-height:1}.mycard b{font-size:15px}
+.loglist .stitem span span{display:block}
+
 /* Accès réservé aux abonnés (gérant jamais bloqué, 7 jours d'essai pour les nouveaux) */
 .lockbox{display:none;flex-direction:column;gap:8px;margin:14px 18px 0;background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:16px}
 .lockbox b{font-size:15px}.lockbox p{margin:0;color:var(--mut);font-size:13px;line-height:1.45}
@@ -689,7 +693,7 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
               <h2 class="wel-h"><span data-i="welH1"></span><br><span data-i="welH2"></span></h2>
               <p data-i="welSub"></p>
             </div>
-            <div class="os-foot"><button class="cta" data-o="new" data-i="welNew"></button><button class="btn2" data-o="old" data-i="welOld"></button><button class="link coach-lnk" data-coach data-i="coachLink"></button></div>
+            <div class="os-foot"><button class="cta" data-o="new" data-i="welNew"></button><button class="btn2" data-o="old" data-i="welOld"></button></div>
           </section>
 
           <section class="os" id="o-reg1">
@@ -803,8 +807,8 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
                 <button class="stitem" data-o="admTar"><span><b data-i="admTar"></b><span data-i="admTarS"></span></span><span class="adm-arr">›</span></button>
                 <button class="stitem" data-o="admDefi"><span><b data-i="admDefi"></b><span id="admDefiSub"></span></span><span class="adm-arr">›</span></button>
                 <button class="stitem" data-o="admCoach"><span><b data-i="admCoach"></b><span id="admCoachSub"></span></span><span class="adm-arr">›</span></button>
-                <button class="stitem" data-o="admCode"><span><b data-i="admCode"></b><span data-i="admCodeS"></span></span><span class="adm-arr">›</span></button>
-                <button class="stitem" data-o="admCoachCode"><span><b data-i="admCoachCode"></b><span data-i="admCoachCodeS"></span></span><span class="adm-arr">›</span></button>
+                <button class="stitem" data-o="admAcc"><span><b data-i="admAcc"></b><span data-i="admAccS"></span></span><span class="adm-arr">›</span></button>
+                <button class="stitem" data-o="admLog"><span><b data-i="admLog"></b><span data-i="admLogS"></span></span><span class="adm-arr">›</span></button>
               </div>
               <p class="note" data-i="admNote"></p>
             </div>
@@ -852,6 +856,8 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
               <div class="seg" id="coachRoom" style="align-self:flex-start"><button data-cr="S1" data-i="S1"></button><button data-cr="S2" data-i="S2"></button></div>
               <div class="field"><label class="fl" for="cS" data-i="coachSpec"></label><input class="inp" id="cS" maxlength="30"></div>
               <div class="field"><label class="fl" for="cSa" data-i="coachSpecAr"></label><input class="inp" id="cSa" dir="rtl" maxlength="30"></div>
+              <div class="field"><label class="fl" for="cTel" data-i="coachTelL"></label><input class="inp" id="cTel" inputmode="numeric" dir="ltr" maxlength="11" data-ph="telPh"></div>
+              <p class="small-note" data-i="coachTelNote"></p>
               <p class="err" id="eCoach"></p>
               <button class="link" id="coachCancel" data-o="coachCancel" data-i="coachCancel" style="align-self:flex-start" hidden></button>
             </div>
@@ -865,6 +871,34 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
               <p class="err" id="eCf"></p>
             </div>
             <div class="os-foot"><button class="cta" data-o="coachFind" data-i="coachFindBtn"></button><button class="btn2" data-o="coachExit" data-i="coachExit"></button></div>
+          </section>
+
+          <section class="os" id="o-acc-find">
+            <div class="os-body">
+              <span class="k" data-i="accK"></span><div class="h" data-i="coachFindT"></div><p class="sub" data-i="accFindS"></p>
+              <div class="field"><label class="fl" for="accQ" data-i="coachFindL"></label><input class="inp" id="accQ" dir="ltr" autocomplete="off" data-ph="coachFindPh"></div>
+              <p class="err" id="eAq"></p>
+            </div>
+            <div class="os-foot"><button class="cta" data-o="accFind" data-i="accFindBtn"></button><button class="btn2" data-o="accExit" data-i="accExit"></button></div>
+          </section>
+
+          <section class="os" id="o-adm-acc">
+            <div class="os-body">
+              <span class="k" data-i="admK"></span><div class="h" data-i="admAcc"></div><p class="sub" data-i="accSub"></p>
+              <div class="stlist" id="accList"></div>
+              <span class="fl" style="margin-top:8px" data-i="accAddT"></span>
+              <div class="field"><label class="fl" for="aN" data-i="accName"></label><input class="inp" id="aN" maxlength="40"></div>
+              <div class="field"><label class="fl" for="aT" data-i="accTel"></label><input class="inp" id="aT" inputmode="numeric" dir="ltr" maxlength="11" data-ph="telPh"></div>
+              <p class="err" id="eAcc"></p><p class="note" data-i="accNote"></p>
+            </div>
+            <div class="os-foot"><button class="cta" data-o="accAdd" data-i="accAddBtn"></button></div>
+          </section>
+
+          <section class="os" id="o-adm-log">
+            <div class="os-body">
+              <span class="k" data-i="admK"></span><div class="h" data-i="admLog"></div><p class="sub" data-i="logSub"></p>
+              <div class="stlist loglist" id="logList"></div>
+            </div>
           </section>
 
           <section class="os" id="o-coach-prog">
@@ -1040,7 +1074,8 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
               </div>
             </div>
             <button class="link" data-desk data-i="deskLink" style="align-self:flex-start"></button>
-            <button class="link" data-coach data-i="coachLink" style="align-self:flex-start"></button>
+            <button class="link" id="coachLnk" data-coach data-i="coachLink" style="align-self:flex-start" hidden></button>
+            <button class="link" id="accLnk" data-acc data-i="accLink" style="align-self:flex-start" hidden></button>
             <div id="infoBox" class="stack" style="gap:8px"></div>
             <span class="k" data-i="notifLbl" style="margin-top:6px"></span>
             <div id="toggles"></div>
@@ -1060,6 +1095,12 @@ button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
         <div class="steps"><button data-w="-0.1" aria-label="−0,1 kg">−0,1</button><button data-w="0.1" aria-label="+0,1 kg">+0,1</button></div>
         <p class="sh-note" id="wHint"></p>
         <button class="cta" id="saveW" data-i="save"></button>
+      </div>
+      <div class="sheet" id="sheetCard" role="dialog" aria-modal="true" aria-labelledby="cardT">
+        <div class="grab"></div>
+        <div class="sh-top"><div><div class="h" id="cardT" data-i="cardT"></div></div><button class="close" data-close aria-label="Fermer">×</button></div>
+        <div class="mycard"><span class="k" data-i="cardK"></span><div class="mycard-no n" id="cardNo" dir="ltr"></div><b id="cardName"></b></div>
+        <p class="sh-note" data-i="cardNote"></p>
       </div>
       <div class="sheet" id="sheetDefi" role="dialog" aria-modal="true" aria-labelledby="dfTitle">
         <div class="grab"></div>
@@ -1165,7 +1206,7 @@ function fromPayload(p, exNames, now) {
     REC: exNames.map(n => { const c = ch.get(n); return c ? { kg: +c.kg, prev: c.prev_kg == null ? null : +c.prev_kg } : null; }),
     days: ((p && p.jours) || []).map(d => String(d).slice(0, 10)),
     done: +(p && p.nb_seances) || 0, memberNo: +(p && p.member_no) || null, defi: !!(p && p.defi), defiMois: +(p && p.defi_mois) || 0,
-    createdAt: u.created_at || null,
+    createdAt: u.created_at || null, coach: !!(p && p.coach), accueil: !!(p && p.accueil),
     perso: (p && p.programme_perso && Array.isArray(p.programme_perso.jours) && p.programme_perso.jours.length) ? p.programme_perso : null,
     notifs: [u.notif_cours !== false, u.notif_abo !== false, u.notif_anniv !== false]
   };
@@ -1197,7 +1238,7 @@ function fromContenu(c) {
 // gérant toujours ; sinon abonnement en cours ; sinon 7 jours d'essai après l'inscription (sans abonnement)
 const ESSAI_JOURS = 7;
 function accesApp(acc, now) {
-  if (!acc || acc.role === 'owner') return { ok: true, essai: null };
+  if (!acc || acc.role === 'owner' || acc.coach || acc.accueil) return { ok: true, essai: null };   // le personnel n'est jamais bloqué
   if (acc.abo) {
     const end = new Date(acc.abo.start + 'T00:00:00'); end.setMonth(end.getMonth() + acc.abo.dur);
     return { ok: end > now, essai: null };   // même fin que l'affichage des jours restants
@@ -1273,7 +1314,7 @@ annNew:"Nouvelle annonce",annNews:"Nouveauté",annPromo:"Promo",annTitle:"Titre 
 annEnd:"Visible jusqu'au (facultatif)",annPublish:"Publier",errAnn:"Écris au moins un titre, en français ou en arabe.",errAnnEnd:"La date de fin ne peut pas être passée.",
 annPublished:"Annonce publiée",annDeleted:"Annonce retirée",annExpired:"terminée",until2:"jusqu'au {d}",del:"Retirer",
 planNew:"Ajouter un cours",planTime:"Heure",planName:"Cours",planCoach:"Coach (facultatif)",planKids:"Séance enfants",planAddBtn:"Ajouter au planning",errPlan:"Indique l'heure et le nom du cours.",planAdded:"Cours ajouté",planDeleted:"Cours retiré",
-tarNote:"Les prix barrés et les économies sont calculés automatiquement à partir du tarif mensuel.",errTar:"Chaque prix doit être un nombre supérieur à 0.",tarSaved:"Tarifs enregistrés",exD:["Bench Press","Squats","Deadlift","Military Press","Lat Pulldown","Barbell Row","Leg Press","Barbell Curl"],coachLink:"Espace coach",coachSetsL:"Séries",coachSessN:"Séance",coachPinT:"Code des coachs",coachPinS:"Réservé aux coachs de la salle.",coachNotSet:"Le gérant doit d'abord choisir le code des coachs (Mode gestion).",coachK:"Espace coach",coachFindT:"Quel membre ?",coachFindS:"Tape son numéro de membre (dans son profil) ou son téléphone.",coachFindL:"Numéro FL ou téléphone",coachFindPh:"FL-0012 ou 22 123 456",coachFindBtn:"Ouvrir son programme",coachExit:"Quitter l'Espace coach",coachNotFound:"Aucun membre avec ce numéro.",coachExpired:"Session terminée : retape le code des coachs.",coachIsAuto:"programme automatique",coachIsPerso:"préparé par un coach",coachSessT:"Nom de la séance",coachSessPh:"Ex. : Haut du corps",coachAddL:"Ajouter un exercice",coachAddPh:"Cherche en anglais : bench, squat, plank…",coachFree:"Ajouter « {x} » (exercice libre)",coachNoEx:"Aucun exercice dans cette séance.",coachAddSess:"+ Séance",coachDelSess:"Supprimer cette séance",coachReset:"Revenir au programme automatique",coachSave:"Enregistrer pour ce membre",coachOther:"Autre membre",coachSaved:"Programme enregistré : le membre le reçoit à sa prochaine ouverture",coachResetDone:"Programme automatique remis",coachErrEmpty:"La séance {x} n'a aucun exercice.",coachErrSets:"Indique les séries de chaque exercice (ex. 3×12).",coachProgT:"Programme préparé par ton coach",coachProgK:"Ton coach",coachProgWhy:"Préparé pour toi par un coach de la salle. Ton rythme : {n} par semaine.",admCoachCode:"Code des coachs",admCoachCodeS:"Pour l'Espace coach",coachCodeSub:"Le code que les coachs tapent sur leur téléphone pour préparer les programmes des membres.",coachCodeNote:"Donne-le seulement aux coachs : l'ancien code ne marche plus et les coachs connectés sont déconnectés. Change-le quand un coach quitte la salle.",coachCodeSaved:"Code des coachs changé",errCodeStaff:"Choisis un code différent de celui de l'accueil.",tOfferK:"Offre",tOfferName:"Nom de l'offre",tOfferNameAr:"Nom de l'offre en arabe",tWa:"WhatsApp affiché sous le prix",tSubK:"Formule",tSubName:"Nom de la formule",tSubNameAr:"Nom de la formule en arabe",tSubOpt:" (facultatif s'il n'y en a qu'une)",tNewOffer:"+ Nouvelle offre",tNewSub:"+ Nouvelle formule",tSingle:"Formule unique",delOffer:"Supprimer cette offre",delSub:"Supprimer cette formule",confirmDel:"Appuie encore pour confirmer la suppression",tarDeleted:"Supprimé",errTarName:"Donne un nom à l'offre.",errSubName:"Donne un nom à la formule.",errSubFirst:"Donne d'abord un nom à la formule qui existe déjà.",errLastSub:"C'est la dernière formule de l'offre : supprime l'offre à la place.",errLastOffer:"Il faut garder au moins une offre.",errTarLimit:"Nombre maximum atteint (12).",
+tarNote:"Les prix barrés et les économies sont calculés automatiquement à partir du tarif mensuel.",errTar:"Chaque prix doit être un nombre supérieur à 0.",tarSaved:"Tarifs enregistrés",exD:["Bench Press","Squats","Deadlift","Military Press","Lat Pulldown","Barbell Row","Leg Press","Barbell Curl"],coachLink:"Espace coach",accLink:"Espace accueil",accK:"Espace accueil",accFindS:"Demande son numéro de membre (bouton « Renouveler » dans son app) ou son téléphone.",accFindBtn:"Ouvrir sa fiche",accExit:"Quitter l'Espace accueil",cardT:"Renouveler mon abonnement",cardK:"Mon numéro de membre",cardNote:"Montre ce numéro à l'accueil : il enregistre ton abonnement et tu le reçois dans l'app.",coachProgBy:"Programme de Coach {n}",coachTelL:"Téléphone du coach (pour l'Espace coach)",coachTelNote:"Le coach se connecte à l'app avec ce numéro et son code personnel : « Espace coach » apparaît dans son profil. S'il n'a pas encore de compte, il s'inscrit avec « Je suis nouveau ».",telPh:"22 123 456",admAcc:"Accueil",admAccS:"Réceptionnistes : nom et téléphone",accSub:"Chaque réceptionniste se connecte avec son numéro et son code personnel : « Espace accueil » apparaît dans son profil.",accAddT:"Ajouter une réceptionniste",accName:"Nom",accTel:"Téléphone",accAddBtn:"Ajouter",accAdded:"Réceptionniste ajoutée",accDeleted:"Retirée : elle n'a plus accès à l'Espace accueil",accNote:"Si elle n'a pas encore de compte, elle s'inscrit avec « Je suis nouveau » avec ce numéro : l'accès s'active tout seul.",errAccName:"Indique son nom.",errTelDup:"Ce numéro est déjà dans la liste.",persActive:"✓ Compte actif",persPending:"En attente de son inscription",admLog:"Abonnements enregistrés",admLogS:"Qui a enregistré quoi",logSub:"Les 100 dernières saisies de l'accueil.",logFrom:"à partir du {d}",logBy:"par {n}, le {d}",coachSetsL:"Séries",coachSessN:"Séance",coachPinT:"Code des coachs",coachPinS:"Réservé aux coachs de la salle.",coachNotSet:"Le gérant doit d'abord choisir le code des coachs (Mode gestion).",coachK:"Espace coach",coachFindT:"Quel membre ?",coachFindS:"Tape son numéro de membre (dans son profil) ou son téléphone.",coachFindL:"Numéro FL ou téléphone",coachFindPh:"FL-0012 ou 22 123 456",coachFindBtn:"Ouvrir son programme",coachExit:"Quitter l'Espace coach",coachNotFound:"Aucun membre avec ce numéro.",coachExpired:"Session terminée : retape le code des coachs.",coachIsAuto:"programme automatique",coachIsPerso:"préparé par un coach",coachSessT:"Nom de la séance",coachSessPh:"Ex. : Haut du corps",coachAddL:"Ajouter un exercice",coachAddPh:"Cherche en anglais : bench, squat, plank…",coachFree:"Ajouter « {x} » (exercice libre)",coachNoEx:"Aucun exercice dans cette séance.",coachAddSess:"+ Séance",coachDelSess:"Supprimer cette séance",coachReset:"Revenir au programme automatique",coachSave:"Enregistrer pour ce membre",coachOther:"Autre membre",coachSaved:"Programme enregistré : le membre le reçoit à sa prochaine ouverture",coachResetDone:"Programme automatique remis",coachErrEmpty:"La séance {x} n'a aucun exercice.",coachErrSets:"Indique les séries de chaque exercice (ex. 3×12).",coachProgT:"Programme préparé par ton coach",coachProgK:"Ton coach",coachProgWhy:"Préparé pour toi par un coach de la salle. Ton rythme : {n} par semaine.",admCoachCode:"Code des coachs",admCoachCodeS:"Pour l'Espace coach",coachCodeSub:"Le code que les coachs tapent sur leur téléphone pour préparer les programmes des membres.",coachCodeNote:"Donne-le seulement aux coachs : l'ancien code ne marche plus et les coachs connectés sont déconnectés. Change-le quand un coach quitte la salle.",coachCodeSaved:"Code des coachs changé",errCodeStaff:"Choisis un code différent de celui de l'accueil.",tOfferK:"Offre",tOfferName:"Nom de l'offre",tOfferNameAr:"Nom de l'offre en arabe",tWa:"WhatsApp affiché sous le prix",tSubK:"Formule",tSubName:"Nom de la formule",tSubNameAr:"Nom de la formule en arabe",tSubOpt:" (facultatif s'il n'y en a qu'une)",tNewOffer:"+ Nouvelle offre",tNewSub:"+ Nouvelle formule",tSingle:"Formule unique",delOffer:"Supprimer cette offre",delSub:"Supprimer cette formule",confirmDel:"Appuie encore pour confirmer la suppression",tarDeleted:"Supprimé",errTarName:"Donne un nom à l'offre.",errSubName:"Donne un nom à la formule.",errSubFirst:"Donne d'abord un nom à la formule qui existe déjà.",errLastSub:"C'est la dernière formule de l'offre : supprime l'offre à la place.",errLastOffer:"Il faut garder au moins une offre.",errTarLimit:"Nombre maximum atteint (12).",
 newsLbl:"Nouveautés",promoLbl:"Promos & offres",example:"Exemple",
 news:[["Nouveaux équipements","De nouveaux équipements ont été ajoutés au plateau musculation."]],
 promoDemo:["-20 % sur l'abonnement 3 mois","Jusqu'au 31 octobre, à l'accueil de la Salle 1."],
@@ -1288,7 +1329,7 @@ infoLbl:"Mes informations",infoGoal:"Objectif",infoLevel:"Niveau",infoFreq:"Séa
 lockedNote:"La date de naissance ne se modifie pas : elle sert à retrouver ton compte.",hSheet:"Ta taille",mcNo:"N° membre",profileSaved:"Profil mis à jour",
 aboutLbl:"À propos",site:"Site officiel",partnerQ:"Vous êtes un partenaire ? Nous contacter",
 recovLbl:"Récupération",recov:[["Sommeil","7 à 9h par nuit. Le muscle se construit pendant le repos."],["Étirements","5 à 10 min après chaque séance. Réduit les courbatures."],["Hydratation","Boire avant, pendant et après. Minimum 2L par jour."],["Jours de repos","1 à 2 jours obligatoires. Le corps a besoin de récupérer."]],
-deskBtn:"Accueil · enregistrer",deskLink:"Accueil · modifier l'abonnement",deskSaved:"Abonnement enregistré par l'accueil",lockT:"Réservé aux abonnés",lockS:"Ton programme, tes séances, le défi et tes progrès s'ouvrent dès que ton abonnement est actif.",renewHint:"Demande à l'accueil de renouveler ton abonnement",trialS:"<b>Essai gratuit</b> : encore {n} pour découvrir ton programme. Ensuite, il faudra un abonnement actif.",
+deskBtn:"Mon numéro pour l'accueil",deskLink:"Mon numéro pour l'accueil",deskSaved:"Abonnement enregistré par l'accueil",lockT:"Réservé aux abonnés",lockS:"Ton programme, tes séances, le défi et tes progrès s'ouvrent dès que ton abonnement est actif.",renewHint:"Demande à l'accueil de renouveler ton abonnement",trialS:"<b>Essai gratuit</b> : encore {n} pour découvrir ton programme. Ensuite, il faudra un abonnement actif.",
 seanceT:"Séance",nSeance:"Séance",segProg:"Programme",segProgress:"Progrès",progFor:"Choisi selon ton objectif et ton niveau. Ton rythme : {n} par semaine.",perWeekShort:"{n} / semaine",minutes:"{n} min",
 weekLbl:"Cette semaine",weekVal:"{d} sur {n}",sessionsLbl:"Les séances",nextSession:"Séance du jour",start:"Commencer la séance",exCount:"{n} exercices",video:"Voir la démo",
 noObj:"Choisis ton objectif dans ton profil pour recevoir un programme.",lvNames:{debutant:"Débutant",intermediaire:"Intermédiaire",avance:"Avancé"},
@@ -1370,7 +1411,7 @@ annNew:"إعلان جديد",annNews:"جديد",annPromo:"عرض",annTitle:"ال
 annEnd:"يظهر حتى (اختياري)",annPublish:"نشر",errAnn:"اكتب عنواناً على الأقل، بالفرنسية أو بالعربية.",errAnnEnd:"لا يمكن أن يكون تاريخ النهاية في الماضي.",
 annPublished:"تم نشر الإعلان",annDeleted:"تم حذف الإعلان",annExpired:"منتهٍ",until2:"حتى {d}",del:"حذف",
 planNew:"إضافة حصة",planTime:"الساعة",planName:"الحصة",planCoach:"المدرب (اختياري)",planKids:"حصة أطفال",planAddBtn:"إضافة إلى البرنامج",errPlan:"أدخل الساعة واسم الحصة.",planAdded:"تمت إضافة الحصة",planDeleted:"تم حذف الحصة",
-tarNote:"الأسعار المشطوبة والتوفير تُحسب تلقائياً من السعر الشهري.",errTar:"كل سعر يجب أن يكون رقماً أكبر من 0.",tarSaved:"تم حفظ الأسعار",exD:["ضغط البنش","سكوات","الرفعة الميتة","الضغط العسكري","السحب العمودي","تجديف بالعمود","ضغط الأرجل","كيرل بالعمود"],coachLink:"فضاء المدرب",coachSetsL:"السلاسل",coachSessN:"الحصة",coachPinT:"رمز المدربين",coachPinS:"مخصص لمدربي القاعة.",coachNotSet:"يجب على المسيّر أولاً اختيار رمز المدربين (وضع الإدارة).",coachK:"فضاء المدرب",coachFindT:"أي عضو؟",coachFindS:"اكتب رقم العضوية (في ملفه الشخصي) أو رقم هاتفه.",coachFindL:"رقم FL أو الهاتف",coachFindPh:"FL-0012 أو 22 123 456",coachFindBtn:"فتح برنامجه",coachExit:"الخروج من فضاء المدرب",coachNotFound:"لا يوجد عضو بهذا الرقم.",coachExpired:"انتهت الجلسة: أعد كتابة رمز المدربين.",coachIsAuto:"برنامج تلقائي",coachIsPerso:"أعدّه مدرب",coachSessT:"اسم الحصة",coachSessPh:"مثال: الجزء العلوي",coachAddL:"إضافة تمرين",coachAddPh:"ابحث بالإنجليزية: bench، squat، plank…",coachFree:"إضافة « {x} » (تمرين حر)",coachNoEx:"لا يوجد تمرين في هذه الحصة.",coachAddSess:"+ حصة",coachDelSess:"حذف هذه الحصة",coachReset:"العودة إلى البرنامج التلقائي",coachSave:"حفظ لهذا العضو",coachOther:"عضو آخر",coachSaved:"تم حفظ البرنامج: سيصل للعضو عند فتح التطبيق",coachResetDone:"تمت إعادة البرنامج التلقائي",coachErrEmpty:"الحصة {x} لا تحتوي على أي تمرين.",coachErrSets:"اكتب عدد السلاسل لكل تمرين (مثال 3×12).",coachProgT:"برنامج أعدّه مدربك",coachProgK:"مدربك",coachProgWhy:"أعدّه لك مدرب القاعة. إيقاعك: {n} في الأسبوع.",admCoachCode:"رمز المدربين",admCoachCodeS:"لفضاء المدرب",coachCodeSub:"الرمز الذي يكتبه المدربون على هواتفهم لإعداد برامج الأعضاء.",coachCodeNote:"أعطِه للمدربين فقط: الرمز القديم لم يعد يعمل ويتم إخراج المدربين المتصلين. غيّره عندما يغادر مدرب القاعة.",coachCodeSaved:"تم تغيير رمز المدربين",errCodeStaff:"اختر رمزاً مختلفاً عن رمز الاستقبال.",tOfferK:"العرض",tOfferName:"اسم العرض",tOfferNameAr:"اسم العرض بالعربية",tWa:"واتساب المعروض تحت السعر",tSubK:"الصيغة",tSubName:"اسم الصيغة",tSubNameAr:"اسم الصيغة بالعربية",tSubOpt:" (اختياري إذا كانت صيغة واحدة)",tNewOffer:"+ عرض جديد",tNewSub:"+ صيغة جديدة",tSingle:"صيغة واحدة",delOffer:"حذف هذا العرض",delSub:"حذف هذه الصيغة",confirmDel:"اضغط مرة أخرى لتأكيد الحذف",tarDeleted:"تم الحذف",errTarName:"أعطِ اسماً للعرض.",errSubName:"أعطِ اسماً للصيغة.",errSubFirst:"أعطِ أولاً اسماً للصيغة الموجودة.",errLastSub:"هذه آخر صيغة في العرض: احذف العرض بدلاً منها.",errLastOffer:"يجب الإبقاء على عرض واحد على الأقل.",errTarLimit:"تم بلوغ الحد الأقصى (12).",
+tarNote:"الأسعار المشطوبة والتوفير تُحسب تلقائياً من السعر الشهري.",errTar:"كل سعر يجب أن يكون رقماً أكبر من 0.",tarSaved:"تم حفظ الأسعار",exD:["ضغط البنش","سكوات","الرفعة الميتة","الضغط العسكري","السحب العمودي","تجديف بالعمود","ضغط الأرجل","كيرل بالعمود"],coachLink:"فضاء المدرب",accLink:"فضاء الاستقبال",accK:"فضاء الاستقبال",accFindS:"اطلب رقم العضوية (زر « جدّد » في تطبيقه) أو رقم هاتفه.",accFindBtn:"فتح ملفه",accExit:"الخروج من فضاء الاستقبال",cardT:"تجديد اشتراكي",cardK:"رقم العضوية",cardNote:"أظهر هذا الرقم للاستقبال: يسجّل اشتراكك وتجده في التطبيق.",coachProgBy:"برنامج المدرب {n}",coachTelL:"هاتف المدرب (لفضاء المدرب)",coachTelNote:"يدخل المدرب إلى التطبيق بهذا الرقم ورمزه الشخصي: يظهر « فضاء المدرب » في ملفه. إذا لم يكن لديه حساب، يسجّل عبر « أنا جديد ».",telPh:"22 123 456",admAcc:"الاستقبال",admAccS:"موظفو الاستقبال: الاسم والهاتف",accSub:"كل موظف استقبال يدخل برقمه ورمزه الشخصي: يظهر « فضاء الاستقبال » في ملفه.",accAddT:"إضافة موظف استقبال",accName:"الاسم",accTel:"الهاتف",accAddBtn:"إضافة",accAdded:"تمت الإضافة",accDeleted:"تم الحذف: لم يعد لديه وصول إلى فضاء الاستقبال",accNote:"إذا لم يكن لديه حساب، يسجّل عبر « أنا جديد » بهذا الرقم: يتفعّل الوصول تلقائياً.",errAccName:"اكتب الاسم.",errTelDup:"هذا الرقم موجود في القائمة.",persActive:"✓ الحساب مفعّل",persPending:"في انتظار تسجيله",admLog:"الاشتراكات المسجّلة",admLogS:"من سجّل ماذا",logSub:"آخر 100 تسجيل من الاستقبال.",logFrom:"ابتداءً من {d}",logBy:"بواسطة {n}، يوم {d}",coachSetsL:"السلاسل",coachSessN:"الحصة",coachPinT:"رمز المدربين",coachPinS:"مخصص لمدربي القاعة.",coachNotSet:"يجب على المسيّر أولاً اختيار رمز المدربين (وضع الإدارة).",coachK:"فضاء المدرب",coachFindT:"أي عضو؟",coachFindS:"اكتب رقم العضوية (في ملفه الشخصي) أو رقم هاتفه.",coachFindL:"رقم FL أو الهاتف",coachFindPh:"FL-0012 أو 22 123 456",coachFindBtn:"فتح برنامجه",coachExit:"الخروج من فضاء المدرب",coachNotFound:"لا يوجد عضو بهذا الرقم.",coachExpired:"انتهت الجلسة: أعد كتابة رمز المدربين.",coachIsAuto:"برنامج تلقائي",coachIsPerso:"أعدّه مدرب",coachSessT:"اسم الحصة",coachSessPh:"مثال: الجزء العلوي",coachAddL:"إضافة تمرين",coachAddPh:"ابحث بالإنجليزية: bench، squat، plank…",coachFree:"إضافة « {x} » (تمرين حر)",coachNoEx:"لا يوجد تمرين في هذه الحصة.",coachAddSess:"+ حصة",coachDelSess:"حذف هذه الحصة",coachReset:"العودة إلى البرنامج التلقائي",coachSave:"حفظ لهذا العضو",coachOther:"عضو آخر",coachSaved:"تم حفظ البرنامج: سيصل للعضو عند فتح التطبيق",coachResetDone:"تمت إعادة البرنامج التلقائي",coachErrEmpty:"الحصة {x} لا تحتوي على أي تمرين.",coachErrSets:"اكتب عدد السلاسل لكل تمرين (مثال 3×12).",coachProgT:"برنامج أعدّه مدربك",coachProgK:"مدربك",coachProgWhy:"أعدّه لك مدرب القاعة. إيقاعك: {n} في الأسبوع.",admCoachCode:"رمز المدربين",admCoachCodeS:"لفضاء المدرب",coachCodeSub:"الرمز الذي يكتبه المدربون على هواتفهم لإعداد برامج الأعضاء.",coachCodeNote:"أعطِه للمدربين فقط: الرمز القديم لم يعد يعمل ويتم إخراج المدربين المتصلين. غيّره عندما يغادر مدرب القاعة.",coachCodeSaved:"تم تغيير رمز المدربين",errCodeStaff:"اختر رمزاً مختلفاً عن رمز الاستقبال.",tOfferK:"العرض",tOfferName:"اسم العرض",tOfferNameAr:"اسم العرض بالعربية",tWa:"واتساب المعروض تحت السعر",tSubK:"الصيغة",tSubName:"اسم الصيغة",tSubNameAr:"اسم الصيغة بالعربية",tSubOpt:" (اختياري إذا كانت صيغة واحدة)",tNewOffer:"+ عرض جديد",tNewSub:"+ صيغة جديدة",tSingle:"صيغة واحدة",delOffer:"حذف هذا العرض",delSub:"حذف هذه الصيغة",confirmDel:"اضغط مرة أخرى لتأكيد الحذف",tarDeleted:"تم الحذف",errTarName:"أعطِ اسماً للعرض.",errSubName:"أعطِ اسماً للصيغة.",errSubFirst:"أعطِ أولاً اسماً للصيغة الموجودة.",errLastSub:"هذه آخر صيغة في العرض: احذف العرض بدلاً منها.",errLastOffer:"يجب الإبقاء على عرض واحد على الأقل.",errTarLimit:"تم بلوغ الحد الأقصى (12).",
 newsLbl:"الجديد",promoLbl:"العروض",example:"مثال",
 news:[["معدات جديدة","معدات جديدة في قاعة الأثقال."]],
 promoDemo:["تخفيض 20٪ على اشتراك 3 أشهر","حتى 31 أكتوبر، في استقبال القاعة 1."],
@@ -1385,7 +1426,7 @@ infoLbl:"معلوماتي",infoGoal:"الهدف",infoLevel:"المستوى",info
 lockedNote:"تاريخ الميلاد لا يُعدّل: يُستعمل لاسترجاع حسابك.",hSheet:"طولك",mcNo:"رقم العضو",profileSaved:"تم تحديث الحساب",
 aboutLbl:"حول القاعة",site:"الموقع الرسمي",partnerQ:"هل أنت شريك؟ تواصل معنا",
 recovLbl:"التعافي",recov:[["النوم","النوم 7-9 ساعات — العضلة تنمو أثناء الراحة"],["التمدد","5-10 دقائق تمدد بعد كل جلسة"],["الترطيب","اشرب قبل وأثناء وبعد التدريب — 2L يومياً على الأقل"],["أيام الراحة","يوم أو يومان راحة إلزاميان — الجسم يحتاج للتعافي"]],
-deskBtn:"الاستقبال · تسجيل",deskLink:"الاستقبال · تعديل الاشتراك",deskSaved:"سجّل الاستقبال الاشتراك",lockT:"خاص بالمشتركين",lockS:"برنامجك وحصصك والتحدي وتقدّمك تُفتح عندما يكون اشتراكك ساريًا.",renewHint:"اطلب من الاستقبال تجديد اشتراكك",trialS:"<b>تجربة مجانية</b>: تبقّى {n} لاكتشاف برنامجك. بعد ذلك يلزم اشتراك ساري.",
+deskBtn:"رقمي للاستقبال",deskLink:"رقمي للاستقبال",deskSaved:"سجّل الاستقبال الاشتراك",lockT:"خاص بالمشتركين",lockS:"برنامجك وحصصك والتحدي وتقدّمك تُفتح عندما يكون اشتراكك ساريًا.",renewHint:"اطلب من الاستقبال تجديد اشتراكك",trialS:"<b>تجربة مجانية</b>: تبقّى {n} لاكتشاف برنامجك. بعد ذلك يلزم اشتراك ساري.",
 seanceT:"تماريني",nSeance:"تماريني",segProg:"البرنامج",segProgress:"تقدّمي",progFor:"اخترناه حسب هدفك ومستواك. إيقاعك: {n} في الأسبوع.",perWeekShort:"{n} / أسبوع",minutes:"{n} دقيقة",
 weekLbl:"هذا الأسبوع",weekVal:"{d} من {n}",sessionsLbl:"الحصص",nextSession:"حصة اليوم",start:"ابدأ الحصة",exCount:"{n} تمارين",video:"شاهد الشرح",
 noObj:"اختر هدفك في حسابك لتحصل على برنامج.",lvNames:{debutant:"مبتدئ",intermediaire:"متوسط",avance:"متقدم"},
@@ -1551,6 +1592,7 @@ function renderHome(){
   app.classList.toggle('locked',!acc.ok);
   tb.hidden=!acc.essai;if(acc.essai)tb.innerHTML=fmt(t('trialS'),{n:lang==='ar'?dayWord(acc.essai):acc.essai+' jour'+(acc.essai>1?'s':'')});
   document.getElementById('ownerLnk').hidden=!(ACCOUNTS[CUR]&&ACCOUNTS[CUR].role==='owner');
+  {const m=ACCOUNTS[CUR],own=!!(m&&m.role==='owner');document.getElementById('coachLnk').hidden=!(m&&(m.coach||own));document.getElementById('accLnk').hidden=!(m&&(m.accueil||own));}
   if(!a){
     g.textContent='';g.classList.remove('two');
     document.getElementById('daysLbl').textContent=t('pendingT');
@@ -1873,25 +1915,15 @@ async function flStaffCheck(code){
   if(r&&r.status==='staff_pin_not_set'){pinErr(t('staffNotSet'));return;}
   if(r&&r.status!=='invalid_session')pinErr(t(isNetErr(r)?'netErr':'saveErr'));
 }
-/* ── Espace coach : un seul code pour tous les coachs, session de 12 h gardée sur le téléphone du coach ── */
-let coachFrom='',CP=null,cpArm=false,cpArmT=0;
-function openCoach(){
-  closeSheets();coachFrom=$('onb').hidden?'app':curOs;flow='coach';osStack=[];$('onb').hidden=false;$('eCf').textContent='';
-  if(flStore.get('fl_coach')){oGo('o-coach-find',false);return;}
-  pinMode='coach';pinBuf='';oGo('o-pin',false);
-}
-function closeCoach(){flow='';pinMode='';pinBuf='';CP=null;if(coachFrom==='app'||!coachFrom){$('onb').hidden=true;}else oGo(coachFrom,false);}
-function coachExpired(){flStore.del('fl_coach');pinMode='coach';pinBuf='';oGo('o-pin',false);$('ePin').textContent=t('coachExpired');}
-async function flCoachLogin(code){
-  kpBusy(true);
-  const r=await flRpc('fl_coach_login',{p_pin:code});
-  kpBusy(false);
-  if(r&&r.status==='ok'){flStore.set('fl_coach',r.token);pinBuf='';pinMode='';$('cfQ').value='';oGo('o-coach-find',false);return;}
-  if(r&&r.status==='locked'){pinErr(lockMsg(r));kpBusy(true);return;}
-  if(r&&r.status==='bad_coach_pin'){pinErr(fmt(t('errCode'),{n:r.left}));return;}
-  if(r&&r.status==='coach_pin_not_set'){pinErr(t('coachNotSet'));return;}
-  pinErr(t(isNetErr(r)?'netErr':'saveErr'));
-}
+/* ── Espace coach et Espace accueil : réservés aux comptes ajoutés par le gérant (fiche coach, liste Accueil) ── */
+let coachFrom='',CP=null,cpArm=false,cpArmT=0,accFrom='',STM=null;
+function staffFrom(){return $('onb').hidden?'app':curOs;}
+function staffClose(from){flow='';pinMode='';pinBuf='';if(from==='app'||!from)$('onb').hidden=true;else oGo(from,false);}
+function staffDenied(){toast(t('admForbidden'));if(flow==='coach')closeCoach();else closeAcc();flRefreshMe();}
+function openCoach(){closeSheets();coachFrom=staffFrom();flow='coach';osStack=[];$('onb').hidden=false;$('eCf').textContent='';$('cfQ').value='';oGo('o-coach-find',false);}
+function closeCoach(){CP=null;staffClose(coachFrom);}
+function openAcc(){closeSheets();accFrom=staffFrom();flow='accueil';osStack=[];$('onb').hidden=false;$('eAq').textContent='';$('accQ').value='';oGo('o-acc-find',false);}
+function closeAcc(){STM=null;staffClose(accFrom);}
 // Séances du membre en cours de modification : {focus, exercices}
 function cpFrom(jours){return jours.map(j=>({focus:String(j.titre||'').split(' — ')[1]||'',exercices:j.exercices.map(e=>({en:e.en||e.fr,fr:e.fr||'',ar:e.ar||'',yt:e.yt||'',sets:e.sets||''}))}));}
 function cpAuto(m){const g=PROGRAMMES[m.objectif];if(!g)return [{focus:'',exercices:[]}];const p=g[m.niveau]||g[progLevel(freqNum(m.frequence))];return cpFrom(p.jours);}
@@ -1933,19 +1965,37 @@ $('onb').addEventListener('click',e=>{
   else if(b.dataset.cpfree!==undefined){const q=CP.q.trim().slice(0,60);if(q)cpAdd({en:q,fr:'',ar:'',yt:q+' tutorial'});return;}
   renderCoach(false);
 });
+// Espace accueil : la fiche du membre réutilise l'écran d'abonnement (o-staffm)
+function openStaffMember(m){
+  STM=m;const c=m.abo?aboCalc(m.abo):null,expire=c&&c.left<=0;   // renouvellement : on repart d'aujourd'hui
+  FORMS.staff=m.abo?{type:m.abo.type,start:expire?isoAgo(0):m.abo.start,dur:m.abo.dur}:{type:'acces-total',start:isoAgo(0),dur:1};
+  $('fa-staff').innerHTML='';oGo('o-staffm');
+}
+function renderStaffMember(){
+  if(!STM)return;
+  const s=stStatus({abo:STM.abo});
+  let sub='<span dir="ltr">'+memberId(STM.no)+' · '+fmtPhone(STM.tel)+'</span>';
+  if(STM.abo)sub+=' · '+t('aboShort')[STM.abo.type]+' · '+fmt(t('stEnds'),{d:fmtDate(aboCalc(STM.abo).end)});
+  $('stCard').innerHTML='<b>'+esc(STM.nom)+'</b><span>'+sub+'</span><i class="'+s.cls+'">'+s.txt+'</i>';
+  aboForm('staff');
+  $('stSaveBtn').textContent=!STM.abo?t('stSaveNew'):t('stSaveUpdate');
+}
+// Membre : « Renouveler » montre son numéro, à donner à l'accueil
+function openCard(){const a=ACCOUNTS[CUR];if(!a)return;$('cardNo').textContent=memberId(a.memberNo);$('cardName').textContent=a.name||'';openSheet('sheetCard');}
 function coachAction(o){
   if(o==='coachFind'){
     const q=$('cfQ').value.trim();if(!q){$('eCf').textContent=t('coachNotFound');return true;}
     admBusy('coachFind',true);
-    flRpc('fl_coach_find',{p_ctoken:flStore.get('fl_coach'),p_q:q}).then(r=>{
+    flMe('fl_coach_find',{p_q:q}).then(r=>{
       admBusy('coachFind',false);
       if(r&&r.status==='ok'){$('eCf').textContent='';cpOpen(r.member);return;}
-      if(r&&r.status==='invalid_coach'){coachExpired();return;}
+      if(r&&r.status==='forbidden'){staffDenied();return;}
+      if(r&&r.status==='invalid_session')return;
       $('eCf').textContent=r&&r.status==='not_found'?t('coachNotFound'):t(isNetErr(r)?'netErr':'saveErr');
     });
     return true;
   }
-  if(o==='coachExit'){const tk=flStore.get('fl_coach');if(tk)flRpc('fl_coach_logout',{p_ctoken:tk});flStore.del('fl_coach');closeCoach();return true;}
+  if(o==='coachExit'){closeCoach();return true;}
   if(o==='cpOther'){CP=null;$('cfQ').value='';$('eCf').textContent='';oGo('o-coach-find',false);return true;}
   if(o==='cpDelSess'){if(CP.jours.length<2)return true;CP.jours.splice(CP.sel,1);CP.sel=Math.max(0,CP.sel-1);renderCoach(true);return true;}
   if(o==='cpSave'){
@@ -1954,10 +2004,11 @@ function coachAction(o){
     if(CP.jours.some(j=>j.exercices.some(e=>!String(e.sets).trim()))){$('eCp').textContent=t('coachErrSets');return true;}
     const contenu={jours:CP.jours.map((j,i)=>({titre:'Séance '+L[i]+(j.focus.trim()?' — '+j.focus.trim():''),exercices:j.exercices.map(e=>({en:e.en,fr:e.fr,ar:e.ar,yt:e.yt,sets:String(e.sets).trim()}))}))};
     $('eCp').textContent='';admBusy('cpSave',true);
-    flRpc('fl_coach_save',{p_ctoken:flStore.get('fl_coach'),p_no:CP.no,p_contenu:contenu}).then(r=>{
+    flMe('fl_coach_save',{p_no:CP.no,p_contenu:contenu}).then(r=>{
       admBusy('cpSave',false);
       if(r&&r.status==='ok'){CP.perso=true;renderCoach(false);toast(t('coachSaved'));return;}
-      if(r&&r.status==='invalid_coach'){coachExpired();return;}
+      if(r&&r.status==='forbidden'){staffDenied();return;}
+      if(r&&r.status==='invalid_session')return;
       $('eCp').textContent=t(isNetErr(r)?'netErr':'saveErr');
     });
     return true;
@@ -1965,17 +2016,31 @@ function coachAction(o){
   if(o==='cpReset'){
     if(!cpArm){cpArm=true;clearTimeout(cpArmT);cpArmT=setTimeout(()=>{cpArm=false;renderCoach(false);},4000);renderCoach(false);return true;}
     cpArm=false;admBusy('cpReset',true);
-    flRpc('fl_coach_reset',{p_ctoken:flStore.get('fl_coach'),p_no:CP.no}).then(r=>{
+    flMe('fl_coach_reset',{p_no:CP.no}).then(r=>{
       admBusy('cpReset',false);
       if(r&&r.status==='ok'){CP.perso=false;CP.jours=cpAuto(CP);CP.sel=0;renderCoach(true);toast(t('coachResetDone'));return;}
-      if(r&&r.status==='invalid_coach'){coachExpired();return;}
+      if(r&&r.status==='forbidden'){staffDenied();return;}
+      if(r&&r.status==='invalid_session')return;
       $('eCp').textContent=t(isNetErr(r)?'netErr':'saveErr');
     });
     return true;
   }
+  if(o==='accFind'){
+    const q=$('accQ').value.trim();if(!q){$('eAq').textContent=t('coachNotFound');return true;}
+    admBusy('accFind',true);
+    flMe('fl_accueil_find',{p_q:q}).then(r=>{
+      admBusy('accFind',false);
+      if(r&&r.status==='ok'){$('eAq').textContent='';openStaffMember(r.member);return;}
+      if(r&&r.status==='forbidden'){staffDenied();return;}
+      if(r&&r.status==='invalid_session')return;
+      $('eAq').textContent=r&&r.status==='not_found'?t('coachNotFound'):t(isNetErr(r)?'netErr':'saveErr');
+    });
+    return true;
+  }
+  if(o==='accExit'){closeAcc();return true;}
   return false;
 }
-document.addEventListener('click',e=>{if(e.target.closest('[data-coach]'))openCoach();});
+document.addEventListener('click',e=>{if(e.target.closest('[data-coach]'))openCoach();else if(e.target.closest('[data-acc]'))openAcc();});
 
 // Envoie une écriture du membre. Sans réseau : gardée (avec sa date) et renvoyée plus tard. Renvoie la réponse de la base.
 async function flSend(fn,params,quiet){
@@ -2122,7 +2187,8 @@ function logout(){
 ['fPhone','fLogin'].forEach(id=>$(id).addEventListener('input',e=>{const v=digits(e.target.value);e.target.value=fmtPhone(v);}));
 $('oBack').onclick=()=>{
   if(flow==='desk'){closeDesk();return;}
-  if(flow==='coach'&&(curOs==='o-pin'||curOs==='o-coach-find')){closeCoach();return;}
+  if(flow==='coach'&&curOs==='o-coach-find'){closeCoach();return;}
+  if(flow==='accueil'){if(curOs==='o-staffm'){oGo('o-acc-find',false);return;}closeAcc();return;}
   if(flow==='coach'&&curOs==='o-coach-prog'){oGo('o-coach-find',false);return;}
   if(flow==='admin'&&!osStack.length){closeAdmin();return;}
   if(curOs==='o-pin'&&(pinMode==='reg2'||pinMode==='claim2')){pinMode=pinMode==='reg2'?'reg1':'claim1';pinBuf='';$('ePin').textContent='';renderOnb();setNotes();return;}
@@ -2163,11 +2229,12 @@ $('onb').addEventListener('click',e=>{
   }
   if(o==='stSave'){
     if(!validForm('staff'))return;const fm=FORMS.staff,btn=$('stSaveBtn');btn.disabled=true;
-    flMe('fl_staff_set_abo',{p_pin:STAFF_PIN,p_start:fm.start,p_dur:fm.dur,p_type:fm.type}).then(r=>{
+    flMe('fl_accueil_set_abo',{p_no:STM.no,p_start:fm.start,p_dur:fm.dur,p_type:fm.type}).then(r=>{
       btn.disabled=false;
-      if(r&&r.status==='ok'){flStore.set(CACHE_ME,Object.assign(flStore.get(CACHE_ME)||{},r));const ph=applyMe(r);ABO=ACCOUNTS[ph].abo;STAFF_PIN=null;closeDesk();toast(t('deskSaved'));flScheduleNotifs();return;}
+      if(r&&r.status==='ok'){STM=null;toast(t('deskSaved'));if(r.self)flRefreshMe();$('accQ').value='';oGo('o-acc-find',false);return;}
+      if(r&&r.status==='forbidden'){staffDenied();return;}
       const e=$('fa-staff-e');if(!e||r&&r.status==='invalid_session')return;
-      e.textContent=r&&r.status==='locked'?lockMsg(r):r&&r.status==='bad_staff_pin'?fmt(t('errCode'),{n:r.left}):r&&r.status==='bad_value'?t('errStart'):t(isNetErr(r)?'netErr':'saveErr');
+      e.textContent=r&&r.status==='bad_value'?t('errStart'):t(isNetErr(r)?'netErr':'saveErr');
     });
     return;
   }
@@ -2232,7 +2299,7 @@ function stStatus(a){
   if(c.left<=0)return {txt:t('expired'),cls:'warn'};
   return {txt:fmt(t('stLeft'),{d:dayWord(c.left)}),cls:c.left<=7?'warn':'ok'};
 }
-function renderStaffMember(){
+function renderStaffMemberAncien(){
   if(!stPhone)return;
   const a=ACCOUNTS[stPhone],s=stStatus(a);
   let sub='<span dir="ltr">'+memberId(a.memberNo)+' · '+fmtPhone(stPhone)+'</span>';
@@ -2243,7 +2310,7 @@ function renderStaffMember(){
 }
 function openDesk(){closeSheets();flow='desk';osStack=[];pinMode='staff';pinBuf='';$('onb').hidden=false;oGo('o-pin',false);}
 function closeDesk(){STAFF_PIN=null;flow='';pinMode='';pinBuf='';$('onb').hidden=true;renderHome();setNotes();}
-function openStaffMember(ph){
+function openStaffMemberAncien(ph){
   stPhone=ph;const a=ACCOUNTS[ph];
   const ai=ph===CUR?aboInfo():null,expire=ai&&ai.left<=0;   // renouvellement : on repart d'aujourd'hui
   FORMS.staff=a.abo?{type:a.abo.type,start:expire?isoAgo(0):a.abo.start,dur:a.abo.dur}:{type:'acces-total',start:isoAgo(0),dur:1};
@@ -2274,7 +2341,8 @@ function parseSets(s){const m=s.match(/^(\d+)\s*×\s*(.+)$/);return m?{n:+m[1],r
 function progLevel(f){return f<=3?'debutant':f<=4?'intermediaire':'avance';}   // ancienne règle, gardée si le niveau manque
 function curProg(){const a=ACCOUNTS[CUR];if(!a)return null;
   if(a.perso){ensureWeek(a);const J=a.perso.jours;   // programme préparé par un coach : il remplace le programme automatique
-    return {p:{titre:t('coachProgT'),titre_ar:t('coachProgT'),meta:'',freq:J.length,jours:J},lv:PROGRAMMES[a.objectif]&&PROGRAMMES[a.objectif][a.niveau]?a.niveau:null,a,coach:true};}
+    const T0=a.perso.coach_nom?esc(fmt(t('coachProgBy'),{n:a.perso.coach_nom})):t('coachProgT');
+    return {p:{titre:T0,titre_ar:T0,meta:'',freq:J.length,jours:J},lv:PROGRAMMES[a.objectif]&&PROGRAMMES[a.objectif][a.niveau]?a.niveau:null,a,coach:true};}
   if(!a.objectif||!PROGRAMMES[a.objectif])return null;ensureWeek(a);
   const lv=PROGRAMMES[a.objectif][a.niveau]?a.niveau:progLevel(a.freq||3);   // niveau du questionnaire, sinon règle de l'ancienne app
   return {p:PROGRAMMES[a.objectif][lv],lv,a};}
@@ -2305,7 +2373,7 @@ function renderSeance(){
     '<div class="row"><span class="k">'+t('weekLbl')+'</span><span class="small-note">'+fmt(t('weekVal'),{d:wk,n:sessWord(freq)})+'</span></div>'+
     '<div class="week2" style="grid-template-columns:repeat('+freq+',1fr)">'+Array.from({length:freq},(_,i)=>'<i class="'+(i<wk?'on':'')+'"></i>').join('')+'</div>'+
     '<span class="k" style="margin-top:4px">'+t('sessionsLbl')+'</span>'+
-    '<div class="sess">'+J.map((j,i)=>'<button class="'+(i===selSess?'on':'')+'" data-ss="'+i+'">'+(i===sug?'<em>'+t('nextSession')+'</em>':'')+'<b>'+trDay(j.titre)+'</b>'+fmt(t('exCount'),{n:j.exercices.length})+'</button>').join('')+'</div>'+
+    '<div class="sess">'+J.map((j,i)=>'<button class="'+(i===selSess?'on':'')+'" data-ss="'+i+'">'+(i===sug?'<em>'+t('nextSession')+'</em>':'')+'<b>'+esc(trDay(j.titre))+'</b>'+fmt(t('exCount'),{n:j.exercices.length})+'</button>').join('')+'</div>'+
     '<div class="exl">'+d.exercices.map((e,i)=>'<div class="exr"><span class="ix">'+(i+1)+'</span><span><b>'+esc(exMain(e))+'</b><span>'+esc(exSub(e))+'</span></span><span class="st">'+fmtSets(e.sets)+'</span><a class="yt" href="'+ytUrl(e.yt)+'" target="_blank" rel="noopener" aria-label="'+t('video')+'"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a></div>').join('')+'</div>'+
     '<button class="cta" data-g="start">'+t('start')+'</button>';
 }
@@ -2322,7 +2390,7 @@ function gmRender(){
   if(g.phase==='ex'){
     const ri=exRecIdx(e),rec=ri>=0?REC[ri]:null;
     if(ri>=0&&g.loads[g.i]===undefined)g.loads[g.i]=rec?rec.kg:(EX_BAR[ri]?20:10);
-    body='<span class="k">'+fmt(t('gmEx'),{i:g.i+1,n:E.length})+' · '+trDay(g.d.titre)+'</span>'+
+    body='<span class="k">'+fmt(t('gmEx'),{i:g.i+1,n:E.length})+' · '+esc(trDay(g.d.titre))+'</span>'+
       '<div class="gm-name n">'+esc(exMain(e))+'</div><div class="gm-alt">'+esc([exSub(e),lang==='ar'?e.fr:e.ar].filter(Boolean).join(' · '))+'</div>'+
       '<div class="gm-sets"><span class="n">'+ps.n+'</span><i>×</i><span class="n">'+fmtSets(ps.rep)+'</span></div>'+
       '<div class="gm-series">'+Array.from({length:ps.n},(_,k)=>'<i class="'+(k<g.s?'on':k===g.s?'cur':'')+'"><span>'+(k+1)+'</span></i>').join('')+'</div>'+
@@ -2338,7 +2406,7 @@ function gmRender(){
     foot='<button class="cta" data-g="endRest">'+t('skipRest')+'</button><button class="btn2" data-g="add30">'+t('add30')+'</button>';
   }else{
     const mins=Math.max(1,Math.round((Date.now()-g.t0)/60000));
-    body='<span class="k">'+trDay(g.d.titre)+'</span><div class="gm-name n">'+t('doneT')+'</div>'+
+    body='<span class="k">'+esc(trDay(g.d.titre))+'</span><div class="gm-name n">'+t('doneT')+'</div>'+
       '<div class="dstats"><div><span class="n">'+mins+'</span><span>'+t('doneDur')+'</span></div><div><span class="n">'+g.exDone+'/'+E.length+'</span><span>'+t('doneEx')+'</span></div><div><span class="n">'+g.series+'</span><span>'+t('doneSeries')+'</span></div></div>'+
       (DEFI.on&&ACCOUNTS[CUR].defi?'<p class="df-res'+(g.defiWhy?'':' ok')+'">'+(g.defiWhy==='pending'?t('dfChecking'):g.defiWhy?fmt(t('dfNo'),{r:t('dfWhy')[g.defiWhy]}):t('dfYes'))+'</p>':'')+
       (g.newRec.length?'<span class="k">'+t('newRecords')+'</span><div>'+g.newRec.map(r=>'<div class="rec"><span class="nm">'+t('exD')[r.i]+'<span>'+(r.prev==null?t('firstRec'):fmt(t('before'),{x:fr(r.prev)}))+'</span></span><span class="n">'+fr(r.kg)+'<small>'+t('kg')+'</small></span><span class="chip '+(r.prev==null?'new':'up')+'">'+(r.prev==null?t('newChip'):'+'+fr(r.kg-r.prev))+'</span></div>').join('')+'</div>':'');
@@ -2400,6 +2468,11 @@ setInterval(()=>{
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let ANNONCES=[];   // fl_contenu
+let PERS={coachs:{},accueil:[]},LOG=null;
+// Téléphones des coachs et liste de l'accueil (Mode gestion), avec l'état de leur compte
+async function loadPers(){const r=await flMe('fl_admin_personnel');if(r&&r.status==='ok')PERS={coachs:Object.fromEntries(r.coachs.map(c=>[c.id,c])),accueil:r.accueil};}
+function persTxt(p){return p&&p.telephone?' · '+fmtPhone(p.telephone)+' · '+(p.compte?t('persActive'):t('persPending')):'';}
+$('onb').addEventListener('click',e=>{const b=e.target.closest('[data-accdel]');if(!b)return;flAdmin('fl_admin_accueil_del',{p_id:+b.dataset.accdel},'accDeleted').then(r=>{if(r)loadPers().then(renderAdmin);});});
 let codeFor='staff',annSeq=2,annType='news',admDay=null,admOffer='fit',admSub='_',admFrom='',tarSalle='S2',tarArm='',tarArmT=0;
 // Remplit les champs de l'offre et de la formule choisies (admOffer / admSub à null : nouvelle)
 function tarForm(){
@@ -2434,8 +2507,14 @@ function renderAdmin(){
   }
   if(curOs==='o-admin')$('admDefiSub').textContent=DEFI.on?t('dfOnS'):t('dfOffS');
   if(curOs==='o-admin')$('admCoachSub').textContent=fmt(t('admCoachS'),{n:COACHES.length});
+  if(curOs==='o-adm-acc'){
+    $('accList').innerHTML=PERS.accueil.length?PERS.accueil.map(a=>'<div class="stitem"><span><b>'+esc(a.nom)+'</b><span dir="ltr">'+fmtPhone(a.telephone)+'</span><span>'+(a.compte?t('persActive'):t('persPending'))+'</span></span><button class="adel" data-accdel="'+a.id+'" aria-label="'+t('del')+'">×</button></div>').join(''):'<p class="stempty">'+t('stNone')+'</p>';
+  }
+  if(curOs==='o-adm-log'){
+    $('logList').innerHTML=LOG===null?'<p class="stempty">…</p>':LOG.length?LOG.map(x=>{const d=new Date(x.created_at);return '<div class="stitem"><span><b>'+esc(x.nom)+'</b><span>'+t('aboShort')[x.abo_type]+' · '+t('dur')[[1,3,6,12].indexOf(x.abo_dur)]+' · '+fmt(t('logFrom'),{d:fmtDate(new Date(x.abo_start+'T00:00:00'))})+'</span><span>'+fmt(t('logBy'),{n:esc(x.par||'—'),d:fmtDate(d)})+'</span></span></div>';}).join(''):'<p class="stempty">'+t('stNone')+'</p>';
+  }
   if(curOs==='o-adm-coach'){
-    $('coachList').innerHTML=COACHES.map((c,i)=>'<div class="stitem'+(i===coachEdit?' editing':'')+'"><span><b>'+esc(lang==='ar'?c[1]||c[0]:c[0])+'</b><span>'+t(c[2])+' · '+esc(lang==='ar'?c[4]||c[3]:c[3])+'</span></span><span class="adm-btns"><button class="adel" data-cedit="'+i+'" aria-label="'+t('edit')+'">✎</button><button class="adel" data-cdel="'+i+'" aria-label="'+t('del')+'">×</button></span></div>').join('')||'<p class="stempty">'+t('stNone')+'</p>';
+    $('coachList').innerHTML=COACHES.map((c,i)=>'<div class="stitem'+(i===coachEdit?' editing':'')+'"><span><b>'+esc(lang==='ar'?c[1]||c[0]:c[0])+'</b><span>'+t(c[2])+' · '+esc(lang==='ar'?c[4]||c[3]:c[3])+persTxt(PERS.coachs[c[5]])+'</span></span><span class="adm-btns"><button class="adel" data-cedit="'+i+'" aria-label="'+t('edit')+'">✎</button><button class="adel" data-cdel="'+i+'" aria-label="'+t('del')+'">×</button></span></div>').join('')||'<p class="stempty">'+t('stNone')+'</p>';
     $('coachFormT').textContent=coachEdit===null?t('coachNew'):fmt(t('coachEditT'),{n:COACHES[coachEdit][0]});
     $('coachSaveBtn').textContent=coachEdit===null?t('coachAdd'):t('save');
     $('coachCancel').hidden=coachEdit===null;
@@ -2474,7 +2553,7 @@ $('onb').addEventListener('click',e=>{
   else if(b.dataset.at2){annType=b.dataset.at2;if(annType==='promo'&&!$('annE').value)$('annE').value=isoIn(14);renderAdmin();}
 });
 // Enregistrement côté base : message d'erreur précis, puis contenu rechargé chez tout le monde
-const ADM_ERR={same_as_staff:'errCodeStaff',no_offer_name:'errTarName',no_formula_name:'errSubName',unnamed_exists:'errSubFirst',last_formula:'errLastSub',last_offer:'errLastOffer',limit:'errTarLimit',forbidden:'admForbidden',duplicate:'errCoachDup',no_name:'errCoach',weak:'errCodeWeak',same:'errCodeSame',bad_pin_format:'errCode4',past_end:'errAnnEnd',no_title:'errAnn'};
+const ADM_ERR={bad_phone:'errPhone',duplicate_tel:'errTelDup',same_as_staff:'errCodeStaff',no_offer_name:'errTarName',no_formula_name:'errSubName',unnamed_exists:'errSubFirst',last_formula:'errLastSub',last_offer:'errLastOffer',limit:'errTarLimit',forbidden:'admForbidden',duplicate:'errCoachDup',no_name:'errCoach',weak:'errCodeWeak',same:'errCodeSame',bad_pin_format:'errCode4',past_end:'errAnnEnd',no_title:'errAnn'};
 async function flAdmin(fn,params,okMsg,errId){
   const r=await flMe(fn,params);
   if(r&&r.status==='ok'){await flRefreshContenu();renderAdmin();if(okMsg)toast(t(okMsg));return r;}
@@ -2488,19 +2567,36 @@ function admAction(o){
   if(o==='admAnn'){$('eAnn').textContent='';oGo('o-adm-ann');return true;}
   if(o==='admPlan'){$('ePlan').textContent='';oGo('o-adm-plan');return true;}
   if(o==='admTar'){if(admOffer===null||!PRICES[admOffer]){admOffer=Object.keys(PRICES)[0];admSub=(SUB[admOffer]||[])[0]||'_';}oGo('o-adm-tar');tarForm();return true;}
-  if(o==='admCoach'){coachForm(null);oGo('o-adm-coach');return true;}
+  if(o==='admCoach'){coachForm(null);oGo('o-adm-coach');loadPers().then(()=>{coachForm(null);renderAdmin();});return true;}
   if(o==='coachCancel'){coachForm(null);renderAdmin();return true;}
   if(o==='coachSave'){
-    const n=$('cN').value.trim(),na=$('cNa').value.trim(),s=$('cS').value.trim(),sa=$('cSa').value.trim();
+    const n=$('cN').value.trim(),na=$('cNa').value.trim(),s=$('cS').value.trim(),sa=$('cSa').value.trim(),tel=digits($('cTel').value);
     if(!n){$('eCoach').textContent=t('errCoach');return true;}
     if(COACHES.some((c,i)=>i!==coachEdit&&c[0].toLowerCase()===n.toLowerCase())){$('eCoach').textContent=t('errCoachDup');return true;}
+    if(tel&&tel.length!==8){$('eCoach').textContent=t('errPhone');return true;}
     const isNew=coachEdit===null,id=isNew?null:COACHES[coachEdit][5],old=isNew?null:COACHES[coachEdit][0];admBusy('coachSave',true);
-    flAdmin('fl_admin_coach_save',{p_id:id,p_nom:n,p_nom_ar:na,p_salle:coachRoom,p_spec:s,p_spec_ar:sa},isNew?'coachAdded':'coachSaved','eCoach').then(r=>{
-      admBusy('coachSave',false);if(!r)return;
-      if(old&&old!==n)delete CAR[old];if(na)CAR[n]=na;coachForm(null);renderAdmin();
+    flAdmin('fl_admin_coach_save',{p_id:id,p_nom:n,p_nom_ar:na,p_salle:coachRoom,p_spec:s,p_spec_ar:sa},null,'eCoach').then(async r=>{
+      if(!r){admBusy('coachSave',false);return;}
+      if(old&&old!==n)delete CAR[old];if(na)CAR[n]=na;
+      const cid=r.id,oldTel=(PERS.coachs[cid]||{}).telephone||'';
+      if(tel!==oldTel){
+        const r2=await flAdmin('fl_admin_coach_tel',{p_id:cid,p_tel:tel||null},null,'eCoach');
+        if(!r2){admBusy('coachSave',false);await loadPers();coachEdit=COACHES.findIndex(c=>c[5]===cid);if(coachEdit<0)coachEdit=null;renderAdmin();return;}
+      }
+      admBusy('coachSave',false);await loadPers();coachForm(null);renderAdmin();toast(t(isNew?'coachAdded':'coachSaved'));
     });
     return true;
   }
+  if(o==='admAcc'){$('eAcc').textContent='';$('aN').value='';$('aT').value='';oGo('o-adm-acc');loadPers().then(renderAdmin);return true;}
+  if(o==='accAdd'){
+    const nm=$('aN').value.trim(),tel=digits($('aT').value);
+    if(!nm){$('eAcc').textContent=t('errAccName');return true;}
+    if(tel.length!==8){$('eAcc').textContent=t('errPhone');return true;}
+    $('eAcc').textContent='';admBusy('accAdd',true);
+    flAdmin('fl_admin_accueil_add',{p_nom:nm,p_tel:tel},'accAdded','eAcc').then(async r=>{admBusy('accAdd',false);if(!r)return;$('aN').value='';$('aT').value='';await loadPers();renderAdmin();});
+    return true;
+  }
+  if(o==='admLog'){LOG=null;oGo('o-adm-log');renderAdmin();flMe('fl_admin_abonnements').then(r=>{LOG=r&&r.status==='ok'?r.rows:[];renderAdmin();});return true;}
   if(o==='admCode'||o==='admCoachCode'){codeFor=o==='admCode'?'staff':'coach';const c=codeFor==='coach';
     $('codeT').textContent=t(c?'admCoachCode':'admCode');$('codeSubP').textContent=t(c?'coachCodeSub':'codeSub');$('codeNoteP').textContent=t(c?'coachCodeNote':'codeNote');
     $('kN').value='';$('kC').value='';$('eCode').textContent='';oGo('o-adm-code');return true;}
@@ -2679,6 +2775,7 @@ app.addEventListener('click',e=>{
 let coachEdit=null,coachRoom='S1';
 function coachForm(i){
   coachEdit=i;const c=i===null?null:COACHES[i];coachRoom=c?c[2]:'S1';
+  {const p=c&&PERS.coachs[c[5]];$('cTel').value=p&&p.telephone?fmtPhone(p.telephone):'';}
   $('cN').value=c?c[0]:'';$('cNa').value=c?c[1]:'';$('cS').value=c?c[3]:'';$('cSa').value=c?c[4]:'';$('eCoach').textContent='';
 }
 $('onb').addEventListener('click',e=>{
@@ -2785,7 +2882,7 @@ app.addEventListener('click',e=>{
   if(b=e.target.closest('#dur button')){dur=+b.dataset.u;renderTarifs();return;}
   if(b=e.target.closest('.tgl')){const i=+b.dataset.g;toggles[i]=!toggles[i];renderToggles();if(toggles[i])askNotif();flSaveProfile({[['notif_cours','notif_abo','notif_anniv'][i]]:toggles[i]});if(typeof flScheduleNotifs==='function')flScheduleNotifs();return;}
   if(b=e.target.closest('[data-o="logout"]')){logout();return;}
-  if(b=e.target.closest('[data-desk]')){openDesk();return;}
+  if(b=e.target.closest('[data-desk]')){openCard();return;}
   if(b=e.target.closest('[data-owner]')){openAdmin();return;}
   if(b=e.target.closest('[data-w]')){wv=Math.min(160,Math.max(40,Math.round((wv+parseFloat(b.dataset.w))*10)/10));updateW();setRuler(wv,true);return;}
   if(b=e.target.closest('[data-x]')){rEx=+b.dataset.x;rv=startFor(rEx);renderExs();renderR();return;}
